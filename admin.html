@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>لوحة تحكم سولف PDF</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>👑 لوحة تحكم سولف PDF</h1>
+            <p>إدارة الكتب والمستخدمين والإحصائيات</p>
+        </header>
+
+        <div class="admin-panel">
+            <div class="admin-grid">
+                <!-- إضافة كتاب -->
+                <div class="admin-card">
+                    <h3>➕ إضافة كتاب جديد</h3>
+                    <input type="text" id="bookTitle" placeholder="عنوان الكتاب" style="width:100%;padding:10px;margin:5px 0;">
+                    <input type="text" id="bookAuthor" placeholder="المؤلف" style="width:100%;padding:10px;margin:5px 0;">
+                    <select id="bookCategory" style="width:100%;padding:10px;margin:5px 0;">
+                        <option>رواية</option>
+                        <option>قصة</option>
+                        <option>شعر</option>
+                        <option>ديني</option>
+                        <option>علمي</option>
+                    </select>
+                    <input type="file" id="bookFile" accept=".pdf" style="width:100%;padding:10px;margin:5px 0;">
+                    <button onclick="addBook()" class="btn btn-success">إضافة الكتاب</button>
+                </div>
+
+                <!-- حذف كتاب -->
+                <div class="admin-card">
+                    <h3>🗑️ حذف كتاب</h3>
+                    <select id="deleteBookSelect" style="width:100%;padding:10px;">
+                        <option value="1">الأرض المسطحة</option>
+                        <option value="2">فن الحرب</option>
+                    </select>
+                    <button onclick="deleteBook()" class="btn btn-warning">حذف الكتاب</button>
+                </div>
+
+                <!-- الإحصائيات -->
+                <div class="admin-card">
+                    <h3>📊 الإحصائيات</h3>
+                    <p>عدد الكتب: <span id="totalBooks">4</span></p>
+                    <p>عدد المستخدمين: <span id="totalUsers">0</span></p>
+                    <p>إجمالي التحميلات: <span id="totalDownloads">0</span></p>
+                </div>
+            </div>
+
+            <!-- قائمة الكتب -->
+            <div style="margin-top:40px;">
+                <h3>📚 جميع الكتب</h3>
+                <div id="booksList" style="background:rgba(255,255,255,0.1);padding:20px;border-radius:10px;">
+                    جاري تحميل الكتب...
+                </div>
+            </div>
+        </div>
+
+        <footer style="text-align:center;padding:30px;">
+            <a href="index.html" class="btn">العودة للرئيسية</a>
+        </footer>
+    </div>
+
+    <script>
+        function addBook() {
+            const title = document.getElementById('bookTitle').value;
+            const author = document.getElementById('bookAuthor').value;
+            const category = document.getElementById('bookCategory').value;
+            
+            if(title && author) {
+                alert(`✅ تم إضافة الكتاب: ${title}\nالمؤلف: ${author}\nالتصنيف: ${category}`);
+                document.getElementById('bookTitle').value = '';
+                document.getElementById('bookAuthor').value = '';
+            } else {
+                alert('يرجى ملء جميع الحقول');
+            }
+        }
+
+        function deleteBook() {
+            const bookId = document.getElementById('deleteBookSelect').value;
+            if(confirm('هل أنت متأكد من حذف هذا الكتاب؟')) {
+                alert(`🗑️ تم حذف الكتاب رقم ${bookId}`);
+            }
+        }
+
+        // عرض الكتب
+        const books = [
+            {id:1, title:"الأرض المسطحة", author:"أسامة المسلم", category:"رواية"},
+            {id:2, title:"فن الحرب", author:"صن تزو", category:"تطوير ذات"},
+            {id:3, title:"القرآن الكريم", author:"", category:"ديني"},
+            {id:4, title:"أطلانطس النار", author:"أحمد خالد مصطفى", category:"خيال"}
+        ];
+
+        document.getElementById('booksList').innerHTML = books.map(book => `
+            <div style="background:rgba(255,255,255,0.1);padding:15px;margin:10px 0;border-radius:8px;">
+                <strong>${book.title}</strong> - ${book.author}
+                <span style="background:#3498db;padding:3px 10px;border-radius:20px;font-size:12px;margin-right:10px;">
+                    ${book.category}
+                </span>
+                <button onclick="editBook(${book.id})" class="btn" style="padding:5px 10px;font-size:12px;">تعديل</button>
+            </div>
+        `).join('');
+
+        function editBook(id) {
+            alert(`✏️ تعديل الكتاب رقم ${id}`);
+        }
+    </script>
+</body>
+                  </html>
